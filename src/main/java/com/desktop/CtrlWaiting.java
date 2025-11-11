@@ -19,5 +19,6 @@ public class CtrlWaiting implements Initializable {
             CtrlCountdown ctrlCountdown = (CtrlCountdown) UtilsViews.getController("ViewCountdown");
             ctrlCountdown.onShow();
             UtilsViews.setView("ViewCountdown");
+        }
     }
 }
