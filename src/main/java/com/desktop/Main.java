@@ -19,10 +19,9 @@ public class Main extends Application {
 
     public static UtilsWS wsClient;
 
-    public static int port = 3000;
-    public static String protocol = "http";
+    public static int port;
+    public static String protocol;
     public static String host = "localhost";
-    public static String protocolWS = "ws";
 
     public static CtrlConfig ctrlConfig;
     public static CtrlWaiting ctrlWaiting;
