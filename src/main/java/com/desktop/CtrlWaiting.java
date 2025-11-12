@@ -15,9 +15,7 @@ public class CtrlWaiting implements Initializable {
 
     public void receiveMessage(JSONObject messageObj) {
         String type = messageObj.optString("type", "");
-        if (type.equals("two_clients_ready")) {
-            CtrlCountdown ctrlCountdown = (CtrlCountdown) UtilsViews.getController("ViewCountdown");
-            ctrlCountdown.onShow();
+        if (type.equals("countdown")) {
             UtilsViews.setView("ViewCountdown");
         }
     }
