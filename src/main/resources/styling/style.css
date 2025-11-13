@@ -1,0 +1,44 @@
+@font-face {
+    font-family: 'm6x11';
+    src: url('m6x11.ttf');
+}
+
+.border {
+    -fx-background-color: #3C467B;
+}
+
+.bg {
+    -fx-background-color: #6E8CFB;
+}
+
+.main_element {
+    -fx-background-color: #50589C;
+}
+
+.aux_element {
+    -fx-background-color: #636CCB;
+}
+
+.txt24 {
+    -fx-font-family: 'm6x11';
+    -fx-font-size: 24px;
+    -fx-text-fill: #FFFFFF;
+}
+
+.txt32 {
+    -fx-font-family: 'm6x11';
+    -fx-font-size: 32px;
+    -fx-text-fill: #FFFFFF;
+}
+
+.txt48 {
+    -fx-font-family: 'm6x11';
+    -fx-font-size: 48px;
+    -fx-text-fill: #FFFFFF;
+}
+
+.txt64 {
+    -fx-font-family: 'm6x11';
+    -fx-font-size: 64px;
+    -fx-text-fill: #FFFFFF;
+}
