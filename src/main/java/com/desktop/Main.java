@@ -21,7 +21,8 @@ public class Main extends Application {
 
     public static int port;
     public static String protocol;
-    public static String host = "localhost";
+    public static String host;
+    public static String playerName;
 
     public static CtrlConfig ctrlConfig;
     public static CtrlWaiting ctrlWaiting;
@@ -100,7 +101,7 @@ public class Main extends Application {
     
         pauseDuring(1500, () -> { // Give time to show connecting message ...
 
-            String host = ctrlConfig.txtHost.getText();
+            host = ctrlConfig.txtHost.getText();
             if (host == "localhost") {
                 protocol = "ws";
                 port = 3000;
@@ -112,6 +113,12 @@ public class Main extends Application {
     
             wsClient.onMessage((response) -> { Platform.runLater(() -> { wsMessage(response); }); });
             wsClient.onError((response) -> { Platform.runLater(() -> { wsError(response); }); });
+            
+            playerName = ctrlConfig.txtName.getText();
+            JSONObject msgObj = new JSONObject();
+            msgObj.put("type", "clientName");
+            msgObj.put("name", playerName);
+            wsClient.safeSend(msgObj.toString());
         });
     }
    
