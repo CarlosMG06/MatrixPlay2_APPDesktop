@@ -102,13 +102,9 @@ public class Main extends Application {
         pauseDuring(1500, () -> { // Give time to show connecting message ...
 
             host = ctrlConfig.txtHost.getText();
-            if (host == "localhost") {
-                protocol = "ws";
-                port = 3000;
-            } else {
-                protocol = "wss";
-                port = 80;
-            }
+            protocol = "wss";  // siempre ws
+            port = 443;       // siempre puerto 3000
+
             wsClient = UtilsWS.getSharedInstance(protocol + "://" + host + ":" + port);
     
             wsClient.onMessage((response) -> { Platform.runLater(() -> { wsMessage(response); }); });

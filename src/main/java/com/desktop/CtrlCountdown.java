@@ -8,6 +8,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 
+import org.json.JSONObject;
+
 public class CtrlCountdown implements Initializable {
 
     @FXML
@@ -20,7 +22,7 @@ public class CtrlCountdown implements Initializable {
     public void receiveMessage(JSONObject messageObj) {
         String type = messageObj.optString("type", "");
         if (type.equals("countdown")) {
-            int secondsRemaining = messageObj.optString("secondsRemaining", "");
+            int secondsRemaining = messageObj.optInt("secondsRemaining");
             if (secondsRemaining == 0) {
                 Platform.runLater(() -> UtilsViews.setView("ViewGame"));
             } else {
