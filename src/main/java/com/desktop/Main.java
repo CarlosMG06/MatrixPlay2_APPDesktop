@@ -40,11 +40,11 @@ public class Main extends Application {
             final int windowHeight = 300;
 
             UtilsViews.parentContainer.setStyle("-fx-font: 14 arial;");
-            UtilsViews.addView(getClass(), "ViewConfig", "/assets/viewConfig.fxml"); 
-            UtilsViews.addView(getClass(), "ViewWaiting", "/assets/viewWaiting.fxml");
-            UtilsViews.addView(getClass(), "ViewCountdown", "/assets/viewCountdown.fxml");
-            UtilsViews.addView(getClass(), "ViewGame", "/assets/viewGame.fxml");
-            UtilsViews.addView(getClass(), "ViewResults", "/assets/viewResults.fxml");
+            UtilsViews.addView(getClass(), "ViewConfig", "/views/viewConfig.fxml"); 
+            UtilsViews.addView(getClass(), "ViewWaiting", "/views/viewWaiting.fxml");
+            UtilsViews.addView(getClass(), "ViewCountdown", "/views/viewCountdown.fxml");
+            UtilsViews.addView(getClass(), "ViewGame", "/views/viewGame.fxml");
+            UtilsViews.addView(getClass(), "ViewResults", "/views/viewResults.fxml");
             
             UtilsViews.setView("ViewConfig");
 
