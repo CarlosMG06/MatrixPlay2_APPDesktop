@@ -1,11 +1,11 @@
 @font-face {
     font-family: 'm6x11';
-    src: url('m6x11.ttf');
+    src: url('../fonts/m6x11.ttf');
 }
 
 .border {
     -fx-background-color: #3C467B;
-    -fx-padding: 10px; /* Gruix de la vorera */
+    -fx-padding: 12px; /* Gruix de la vorera */
 }
 
 .bg {
