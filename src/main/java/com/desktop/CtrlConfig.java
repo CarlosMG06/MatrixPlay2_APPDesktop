@@ -51,6 +51,9 @@ public class CtrlConfig implements Initializable, Messages, MessageListener {
             case T_CHECK_NAME_STATUS:
                 String status = msgObj.optString(K_VALUE, "");
                 if (status == V_NAME_AVAILABLE) {
+                    msgObj = new JSONObject();
+                    msgObj.put("type", C_AWAITING_COUNTDOWN);
+                    WSManager.client.safeSend(msgObj.toString());
                     UtilsViews.setViewAnimating("ViewWaiting");
                 } else if (status == V_NAME_USED) {
                     WSManager.updateConnectionText("Name already in use", Color.RED);

@@ -19,7 +19,7 @@ public class WSManager {
         client.onError(WSManager::handleConnectionError);
     }
 
-     private static void deliverToActiveView(String response) {
+    private static void deliverToActiveView(String response) {
         JSONObject msgObj = new JSONObject(response);
         String activeView = UtilsViews.getActiveView();
         MessageListener controller = (MessageListener) UtilsViews.getController(activeView);
@@ -27,13 +27,10 @@ public class WSManager {
             controller.receiveMessage(msgObj);
             return;
         }
-     }
-     private static void handleConnectionError(String response) {
+    }
+    private static void handleConnectionError(String response) {
         updateConnectionText("Connection refused", Color.RED);
-        pauseDuring(1500, () -> {
-                ctrlConfig.txtMessage.setText("");
-        });
-     }
+    }
 
     private static void pauseDuring(long milliseconds, Runnable action) {
         PauseTransition pause = new PauseTransition(Duration.millis(milliseconds));
@@ -41,7 +38,7 @@ public class WSManager {
         pause.play();
     }
 
-     public static void updateConnectionText(String text, Color color) {
+    public static void updateConnectionText(String text, Color color) {
         if (ctrlConfig != null && ctrlConfig.txtMessage != null) {
             ctrlConfig.txtMessage.setTextFill(color);
             ctrlConfig.txtMessage.setText(text);
