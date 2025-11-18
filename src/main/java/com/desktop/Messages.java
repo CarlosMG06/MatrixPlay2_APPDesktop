@@ -1,3 +1,5 @@
+package com.desktop;
+
 public interface Messages {
     public final String K_TYPE = "type";
     public final String K_VALUE = "value";
