@@ -1,42 +1,54 @@
 package com.desktop;
 
 public class GameBar {
-    private final double POS_X;
-    private double posY;
+    private double posX;
+    private int posY;
     private int width;
-    private final int THICKNESS;
-    // private final int MOVE_SPEED;
+    private int height;
 
-    public GameBar(double posX, double posY, int width, int THICKNESS) {
-        this.POS_X = posX;
+    public GameBar(double posX, int posY, int WIDTH, int height) {
+        this.posX = posX;
         this.posY = posY;
-        this.width = width;
-        this.THICKNESS = THICKNESS;
-        // this.MOVE_SPEED = MOVE_SPEED;
+        this.width = WIDTH;
+        this.height = height;
+    }
+
+    public void setGameBar(double posX, int posY) {
+        this.posX = posX;
+        this.posY = posY;
     }
 
     public double getPosX() {
-        return POS_X;
+        return posX;
     }
 
-    public double getPosY() {
+    public int getPosY() {
         return posY;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
 
     public int getWidth() {
         return width;
     }
 
-    public void setWidth(int width) {
-        this.width = width;
+    public int moveUp() {
+        if (posY + 1 > 64) {
+            return (int) posY;
+        }
+        return (int) posY + 1;
     }
 
-    public int getThickness() {
-        return THICKNESS;
+    public int moveDown() {
+        if (posY - 1 < 0) {
+            return (int) posY;
+        }
+        return (int) posY - 1;
     }
-
-    // public int getMoveSpeed() {
-    //     return MOVE_SPEED;
-    // }
-
 }

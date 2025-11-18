@@ -29,9 +29,11 @@ public class CtrlCountdown implements Initializable, Messages, MessageListener {
             int seconds = value.optInt(V_SECONDS);
             
             if (seconds == 5) {
-                labelName1.setText(player1);
-                labelName2.setText(player2);
-                if (Main.clientName == player1) {
+                Platform.runLater(() -> {
+                    labelName1.setText(player1);
+                    labelName2.setText(player2);
+                });
+                if (Main.clientName.equals(player1)) {
                     Main.playerNumber = 1;
                     Main.rivalName = player2;
                 } else {
@@ -40,10 +42,17 @@ public class CtrlCountdown implements Initializable, Messages, MessageListener {
                 }
             } else if (seconds == 0) {
                 Platform.runLater(() -> UtilsViews.setView("ViewGame"));
+                CtrlGame ctrlGame = (CtrlGame) UtilsViews.getController("ViewGame");
+                ctrlGame.onShow();
+                msgObj = new JSONObject();
+                msgObj.put("type", C_READY_STARTGAME);
+                WSManager.client.safeSend(msgObj.toString());
             }
-            labelCountdown.setText(String.valueOf(seconds));
+            Platform.runLater(() -> {
+                labelCountdown.setText(String.valueOf(seconds));
 
-            labelCountdown.setStyle("-fx-font-size: " + (64 + 16 * (5 - seconds)) + "px;");
+                labelCountdown.setStyle("-fx-font-size: " + (64 + 16 * (5 - seconds)) + "px;");
+            });
         }
     }
 
