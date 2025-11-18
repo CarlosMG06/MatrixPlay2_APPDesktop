@@ -35,12 +35,13 @@ public class CtrlGame implements Initializable, Messages, MessageListener {
         });
 
         gameContainer.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.UP) KEY_UP = true;
-            if (event.getCode() == KeyCode.DOWN) KEY_DOWN = true;
+            System.out.println("\n\n\nsfdsdf entro aca \n\n\n");
+            if (event.getCode().equals(KeyCode.UP)) KEY_UP = true;
+            if (event.getCode().equals(KeyCode.DOWN)) KEY_DOWN = true;
         });
         gameContainer.setOnKeyReleased(event -> {
-            if (event.getCode() == KeyCode.UP) KEY_UP = false;
-            if (event.getCode() == KeyCode.DOWN) KEY_DOWN = false;
+            if (event.getCode().equals(KeyCode.UP)) KEY_UP = false;
+            if (event.getCode().equals(KeyCode.DOWN)) KEY_DOWN = false;
         });
         gameContainer.setFocusTraversable(true);
 
@@ -59,7 +60,7 @@ public class CtrlGame implements Initializable, Messages, MessageListener {
             @Override
             public void handle(long now) {
                 barToMove = getBarToMove();
-                double newPosY = barToMove.getPosY();
+                int newPosY = barToMove.getPosY();
                 if (KEY_UP) {
                     newPosY = barToMove.moveUp();
                 }

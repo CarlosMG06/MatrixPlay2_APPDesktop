@@ -1,25 +1,28 @@
 package com.desktop;
 
 public class GameBar {
-    private final double POS_X;
-    private double posY;
-    private final int WIDTH;
+    private double posX;
+    private int posY;
+    private int width;
     private int height;
-    // private final int MOVE_SPEED;
 
-    public GameBar(double posX, double posY, int WIDTH, int height) {
-        this.POS_X = posX;
+    public GameBar(double posX, int posY, int WIDTH, int height) {
+        this.posX = posX;
         this.posY = posY;
-        this.WIDTH = WIDTH;
+        this.width = WIDTH;
         this.height = height;
-        // this.MOVE_SPEED = MOVE_SPEED;
+    }
+
+    public void setGameBar(double posX, int posY) {
+        this.posX = posX;
+        this.posY = posY;
     }
 
     public double getPosX() {
-        return POS_X;
+        return posX;
     }
 
-    public double getPosY() {
+    public int getPosY() {
         return posY;
     }
 
@@ -32,14 +35,20 @@ public class GameBar {
     }
 
     public int getWidth() {
-        return WIDTH;
+        return width;
     }
 
-    public double moveUp() {
-        return posY + 0.01;
+    public int moveUp() {
+        if (posY + 1 > 64) {
+            return (int) posY;
+        }
+        return (int) posY + 1;
     }
 
-    public double moveDown() {
-        return posY - 0.01;
+    public int moveDown() {
+        if (posY - 1 < 0) {
+            return (int) posY;
+        }
+        return (int) posY - 1;
     }
 }
