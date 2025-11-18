@@ -6,10 +6,6 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-    public static int port;
-    public static String protocol;
-    public static String host;
-
     public static String clientName = "";
     public static String rivalName = "";
     public static int playerNumber;

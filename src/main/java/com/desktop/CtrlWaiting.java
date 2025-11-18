@@ -11,9 +11,6 @@ public class CtrlWaiting implements Initializable, Messages, MessageListener {
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        JSONObject msgObj = new JSONObject();
-        msgObj.put("type", C_AWAITING_COUNTDOWN);
-        WSManager.client.safeSend(msgObj.toString());
     }
 
     public void receiveMessage(JSONObject msgObj) {
