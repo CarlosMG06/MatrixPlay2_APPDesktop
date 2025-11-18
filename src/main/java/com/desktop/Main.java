@@ -1,31 +1,18 @@
 package com.desktop;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import javafx.animation.PauseTransition;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 public class Main extends Application {
-
-    public static UtilsWS wsClient;
-
     public static int port;
     public static String protocol;
     public static String host;
-    public static String playerName;
 
-    public static CtrlConfig ctrlConfig;
-    public static CtrlWaiting ctrlWaiting;
+    public static String clientName = "";
+    public static String rivalName = "";
+    public static int playerNumber;
 
     public static void main(String[] args) {
 
@@ -48,9 +35,6 @@ public class Main extends Application {
             
             UtilsViews.setView("ViewConfig");
 
-            ctrlConfig = (CtrlConfig) UtilsViews.getController("ViewConfig");
-            ctrlWaiting = (CtrlWaiting) UtilsViews.getController("ViewWaiting");
-
             Scene scene = new Scene(UtilsViews.parentContainer);
             
             stage.setScene(scene);
@@ -70,74 +54,11 @@ public class Main extends Application {
         }
     }
 
-
     @Override
     public void stop() { 
-        if (wsClient != null) {
-            wsClient.forceExit();
+        if (WSManager.client != null) {
+            WSManager.client.forceExit();
         }
         System.exit(1); // Kill all executor services
-    }
-
-    public static void pauseDuring(long milliseconds, Runnable action) {
-        PauseTransition pause = new PauseTransition(Duration.millis(milliseconds));
-        pause.setOnFinished(event -> Platform.runLater(action));
-        pause.play();
-    }
-
-    public static <T> List<T> jsonArrayToList(JSONArray array, Class<T> clazz) {
-        List<T> list = new ArrayList<>();
-        for (int i = 0; i < array.length(); i++) {
-            T value = clazz.cast(array.get(i));
-            list.add(value);
-        }
-        return list;
-    }
-
-    public static void connectToServer() {
-
-        ctrlConfig.txtMessage.setTextFill(Color.BLACK);
-        ctrlConfig.txtMessage.setText("Connecting ...");
-    
-        pauseDuring(1500, () -> { // Give time to show connecting message ...
-
-            host = ctrlConfig.txtHost.getText();
-            protocol = "wss";  // siempre ws
-            port = 443;       // siempre puerto 3000
-
-            wsClient = UtilsWS.getSharedInstance(protocol + "://" + host + ":" + port);
-    
-            wsClient.onMessage((response) -> { Platform.runLater(() -> { wsMessage(response); }); });
-            wsClient.onError((response) -> { Platform.runLater(() -> { wsError(response); }); });
-            
-            playerName = ctrlConfig.txtName.getText();
-            JSONObject msgObj = new JSONObject();
-            msgObj.put("type", "clientName");
-            msgObj.put("name", playerName);
-            wsClient.safeSend(msgObj.toString());
-        });
-    }
-   
-    private static void wsMessage(String response) {
-        Platform.runLater(()->{ 
-            // Fer aquí els canvis a la interficie
-            if (UtilsViews.getActiveView() != "ViewWaiting") {
-                UtilsViews.setViewAnimating("ViewWaiting");
-            }
-            JSONObject msgObj = new JSONObject(response);
-            ctrlWaiting.receiveMessage(msgObj);
-        });
-    }
-
-    private static void wsError(String response) {
-
-        String connectionRefused = "Connection refused";
-        if (response.indexOf(connectionRefused) != -1) {
-            ctrlConfig.txtMessage.setTextFill(Color.RED);
-            ctrlConfig.txtMessage.setText(connectionRefused);
-            pauseDuring(1500, () -> {
-                ctrlConfig.txtMessage.setText("");
-            });
-        }
     }
 }

@@ -10,25 +10,40 @@ import javafx.scene.control.Label;
 
 import org.json.JSONObject;
 
-public class CtrlCountdown implements Initializable {
+public class CtrlCountdown implements Initializable, Messages, MessageListener {
 
     @FXML
-    Label labelCountdown;
+    Label labelCountdown, labelName1, labelName2;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }
 
-    public void receiveMessage(JSONObject messageObj) {
-        String type = messageObj.optString("type", "");
-        if (type.equals("countdown")) {
-            int secondsRemaining = messageObj.optInt("secondsRemaining");
-            if (secondsRemaining == 0) {
+    public void receiveMessage(JSONObject msgObj) {
+        String type = msgObj.optString(K_TYPE, "");
+        if (type.equals(T_COUNTDOWN)) {
+            JSONObject value = new JSONObject(msgObj.optString(K_VALUE, ""));
+            String player1 = value.optString(V_P1NAME, "");
+            String player2 = value.optString(V_P2NAME, "");
+            
+            int seconds = value.optInt(V_SECONDS);
+            
+            if (seconds == 5) {
+                labelName1.setText(player1);
+                labelName2.setText(player2);
+                if (Main.clientName == player1) {
+                    Main.playerNumber = 1;
+                    Main.rivalName = player2;
+                } else {
+                    Main.playerNumber = 2;
+                    Main.rivalName = player1;
+                }
+            } else if (seconds == 0) {
                 Platform.runLater(() -> UtilsViews.setView("ViewGame"));
-            } else {
-                labelCountdown.setText(String.valueOf(secondsRemaining));
             }
-            labelCountdown.setStyle("-fx-font-size: " + (64 + 16 * (3 - secondsRemaining)) + "px;");
+            labelCountdown.setText(String.valueOf(seconds));
+
+            labelCountdown.setStyle("-fx-font-size: " + (64 + 16 * (5 - seconds)) + "px;");
         }
     }
 

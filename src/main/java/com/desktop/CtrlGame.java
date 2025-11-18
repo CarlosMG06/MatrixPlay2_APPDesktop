@@ -9,7 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.VBox;
 
-public class CtrlGame implements Initializable {
+public class CtrlGame implements Initializable, Messages, MessageListener {
 
     @FXML
     private VBox gameContainer;
@@ -28,8 +28,13 @@ public class CtrlGame implements Initializable {
             display.setHeight(newVal.doubleValue());
         });
     }
-    
-    public void updateGameData(JSONObject data) {
-        display.setDatos(data);
+
+    @Override
+    public void receiveMessage(JSONObject msgObj) {
+        String type = msgObj.optString(K_TYPE, "");
+        if (type.equals(T_SERVER_DATA)) {
+            JSONObject data = new JSONObject(msgObj.optString(K_SERVER_GAME_DATA));
+            display.setDatos(data);
+        }
     }
 }

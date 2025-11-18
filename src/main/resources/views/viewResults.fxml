@@ -8,7 +8,7 @@
    <children>
       <VBox alignment="CENTER" styleClass="bg" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label styleClass="txt48" text="You Win!" />
+            <Label fx:id="labelResults" styleClass="txt48" text="You Win!" />
          </children>
       </VBox>
    </children>
