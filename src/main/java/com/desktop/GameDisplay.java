@@ -85,15 +85,15 @@ public class GameDisplay extends Canvas {
         gc.fillRect(
             p1Bar.getPosX(),
             p1Bar.getPosY(),
-            p1Bar.getThickness(),
-            p1Bar.getWidth()
+            p1Bar.getWidth(),
+            p1Bar.getHeight()
         );
         
         gc.fillRect(
             p2Bar.getPosX(),
             p2Bar.getPosY(),
-            p2Bar.getThickness(),
-            p1Bar.getWidth()
+            p2Bar.getWidth(),
+            p2Bar.getHeight()
         );
     }
 
@@ -138,14 +138,14 @@ public class GameDisplay extends Canvas {
             p1Bar.getPosX(),
             json.optInt("p1PossY") * scaleY,
             p1Bar.getWidth(),
-            p1Bar.getThickness()
+            p1Bar.getHeight()
         );
         
         p2Bar = new GameBar(
             p2Bar.getPosX(),
             json.optInt("p2PossY") * scaleY,
             p2Bar.getWidth(),
-            p2Bar.getThickness()
+            p2Bar.getHeight()
         );
 
         // Actualizar posición de la bola

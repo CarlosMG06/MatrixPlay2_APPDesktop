@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 
 import org.json.JSONObject;
 
+import javafx.application.Platform;
 import javafx.fxml.Initializable;
 
 public class CtrlWaiting implements Initializable, Messages, MessageListener {
@@ -16,7 +17,7 @@ public class CtrlWaiting implements Initializable, Messages, MessageListener {
     public void receiveMessage(JSONObject msgObj) {
         String type = msgObj.optString("type", "");
         if (type.equals(T_COUNTDOWN)) {
-            UtilsViews.setView("ViewCountdown");
+            Platform.runLater(() -> UtilsViews.setView("ViewCountdown"));
         }
     }
 }
