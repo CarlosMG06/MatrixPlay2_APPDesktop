@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 
@@ -21,8 +22,8 @@ public class CtrlGame implements Initializable, Messages, MessageListener {
 
     private Boolean KEY_UP = false;
     private Boolean KEY_DOWN = false;
-    // private GameBar barToMove;
-    private int posY;
+    private GameBar barToMove;
+    // private int posY;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -36,46 +37,58 @@ public class CtrlGame implements Initializable, Messages, MessageListener {
             display.setHeight(newVal.doubleValue());
         });
 
-        gameContainer.setOnKeyPressed(event -> {
-            System.out.println("\n\n\nsfdsdf entro aca \n\n\n");
-            if (event.getCode().equals(KeyCode.UP)) KEY_UP = true;
-            if (event.getCode().equals(KeyCode.DOWN)) KEY_DOWN = true;
-        });
-        gameContainer.setOnKeyReleased(event -> {
-            if (event.getCode().equals(KeyCode.UP)) KEY_UP = false;
-            if (event.getCode().equals(KeyCode.DOWN)) KEY_DOWN = false;
-        });
-        gameContainer.setFocusTraversable(true);
+        // gameContainer.setOnKeyPressed(event -> {
+        //     System.out.println("\n\n\nsfdsdf entro aca \n\n\n");
+        //     if (event.getCode().equals(KeyCode.UP)) KEY_UP = true;
+        //     if (event.getCode().equals(KeyCode.DOWN)) KEY_DOWN = true;
+        // });
+        // gameContainer.setOnKeyReleased(event -> {
+        //     if (event.getCode().equals(KeyCode.UP)) KEY_UP = false;
+        //     if (event.getCode().equals(KeyCode.DOWN)) KEY_DOWN = false;
+        // });
+        // gameContainer.setFocusTraversable(true);
 
     }
 
-    // private GameBar getBarToMove() {
-    //     if (Main.playerNumber == 1) {
-    //         return display.getP1Bar();
-    //     } else {
-    //         return display.getP2Bar();
-    //     }
-    // }
+    private GameBar getBarToMove() {
+        if (Main.playerNumber == 1) {
+            return display.getP1Bar();
+        } else {
+            return display.getP2Bar();
+        }
+    }
 
     public void onShow() {
+        Scene scene = gameContainer.getScene();
+        if (scene != null) {
+        scene.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.UP) KEY_UP = true;
+            if (event.getCode() == KeyCode.DOWN) KEY_DOWN = true;
+        });
+        scene.setOnKeyReleased(event -> {
+            if (event.getCode() == KeyCode.UP) KEY_UP = false;
+            if (event.getCode() == KeyCode.DOWN) KEY_DOWN = false;
+        });
+    }
+
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                // barToMove = getBarToMove();
-                // int newPosY = barToMove.getPosY();
-                // if (KEY_UP) {
-                //     newPosY = barToMove.moveUp();
-                // }
-                // if (KEY_DOWN) {
-                //     newPosY = barToMove.moveDown();
-                // }
-                int newPosY = posY;
+                barToMove = getBarToMove();
+                int newPosY = barToMove.getPosY();
                 if (KEY_UP) {
-                    newPosY += 1;
+                    newPosY = barToMove.moveUp();
                 }
                 if (KEY_DOWN) {
-                    newPosY -= 1;
+                    newPosY = barToMove.moveDown();
                 }
+                // int newPosY = posY;
+                // if (KEY_UP) {
+                //     newPosY += 1;
+                // }
+                // if (KEY_DOWN) {
+                //     newPosY -= 1;
+                // }
                 JSONObject msgObj = new JSONObject();
                 msgObj.put("type", C_MOVE);
                 JSONObject value = new JSONObject();
@@ -103,11 +116,11 @@ public class CtrlGame implements Initializable, Messages, MessageListener {
                     Main.playerNumber = player;
                 }
             }
-            if (Main.playerNumber == 1) {
-                posY = gameData.optInt("p1PossY");
-            } else {
-                posY = gameData.optInt("p2possY");
-            }
+            // if (Main.playerNumber == 1) {
+            //     posY = gameData.optInt("p1PossY");
+            // } else {
+            //     posY = gameData.optInt("p2possY");
+            // }
         }
     }
 }

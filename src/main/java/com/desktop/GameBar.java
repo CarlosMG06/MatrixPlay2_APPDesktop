@@ -39,16 +39,16 @@ public class GameBar {
     }
 
     public int moveUp() {
-        if (posY + 1 > 64) {
-            return (int) posY;
-        }
-        return (int) posY + 1;
-    }
-
-    public int moveDown() {
         if (posY - 1 < 0) {
             return (int) posY;
         }
         return (int) posY - 1;
+    }
+
+    public int moveDown() {
+        if (posY + 1 > 64) {
+            return (int) posY;
+        }
+        return (int) posY + 1;
     }
 }
