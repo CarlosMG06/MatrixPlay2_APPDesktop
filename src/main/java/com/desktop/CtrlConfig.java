@@ -33,9 +33,14 @@ public class CtrlConfig implements Initializable, Messages, MessageListener {
 
     @FXML
     private void connectToServer() {
-        protocol = "wss";
         host = txtHost.getText();
-        port = 443;
+        if (host.equals("localhost")) {
+            protocol = "ws";
+            port = 3000;
+        } else {
+            protocol = "wss";
+            port = 443;
+        }
         WSManager.connectToServer(protocol, host, port);
     }
 
