@@ -11,7 +11,7 @@
       <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="50.0" spacing="20.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="50.0">
          <children>
             <Label fx:id="labelName1" alignment="CENTER" prefHeight="40.0" prefWidth="160.0" styleClass="txt32" text="Jugador1" textAlignment="CENTER" />
-            <Label alignment="CENTER" prefHeight="40.0" prefWidth="40.0" styleClass="txt32" text="vs." textAlignment="CENTER" />
+            <Label alignment="CENTER" prefHeight="50.0" prefWidth="80.0" styleClass="txt32" text="vs." textAlignment="CENTER" />
             <Label fx:id="labelName2" alignment="CENTER" prefHeight="40.0" prefWidth="160.0" styleClass="txt32" text="Jugador2" textAlignment="CENTER" />
          </children>
       </HBox>
