@@ -52,7 +52,7 @@ public class GameDisplay extends Canvas {
         double scaledBallSize = ballSize * scaleX;
 
         p1Bar = new GameBar(0, 0, (int)scaledRecWidth, (int)scaledRecHeight);
-        p2Bar = new GameBar(61 * scaleX, 0, (int)scaledRecWidth, (int)scaledRecHeight);
+        p2Bar = new GameBar(61, 0, (int)scaledRecWidth, (int)scaledRecHeight);
         
         ball = new GameBall(0, 0, (int)scaledBallSize);
 
