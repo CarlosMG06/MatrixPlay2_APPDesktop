@@ -3,6 +3,7 @@ package com.desktop;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javafx.animation.AnimationTimer;
@@ -20,7 +21,8 @@ public class CtrlGame implements Initializable, Messages, MessageListener {
 
     private Boolean KEY_UP = false;
     private Boolean KEY_DOWN = false;
-    private GameBar barToMove;
+    // private GameBar barToMove;
+    private int posY;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -47,25 +49,32 @@ public class CtrlGame implements Initializable, Messages, MessageListener {
 
     }
 
-    private GameBar getBarToMove() {
-        if (Main.playerNumber == 1) {
-            return display.getP1Bar();
-        } else {
-            return display.getP2Bar();
-        }
-    }
+    // private GameBar getBarToMove() {
+    //     if (Main.playerNumber == 1) {
+    //         return display.getP1Bar();
+    //     } else {
+    //         return display.getP2Bar();
+    //     }
+    // }
 
     public void onShow() {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                barToMove = getBarToMove();
-                int newPosY = barToMove.getPosY();
+                // barToMove = getBarToMove();
+                // int newPosY = barToMove.getPosY();
+                // if (KEY_UP) {
+                //     newPosY = barToMove.moveUp();
+                // }
+                // if (KEY_DOWN) {
+                //     newPosY = barToMove.moveDown();
+                // }
+                int newPosY = posY;
                 if (KEY_UP) {
-                    newPosY = barToMove.moveUp();
+                    newPosY += 1;
                 }
                 if (KEY_DOWN) {
-                    newPosY = barToMove.moveDown();
+                    newPosY -= 1;
                 }
                 JSONObject msgObj = new JSONObject();
                 msgObj.put("type", C_MOVE);
@@ -83,8 +92,22 @@ public class CtrlGame implements Initializable, Messages, MessageListener {
     public void receiveMessage(JSONObject msgObj) {
         String type = msgObj.optString(K_TYPE, "");
         if (type.equals(T_SERVER_DATA)) {
-            JSONObject data = new JSONObject(msgObj.optString(K_SERVER_GAME_DATA));
-            display.setDatos(data);
+            JSONObject gameData = new JSONObject(msgObj.optString(K_SERVER_GAME_DATA));
+            display.setDatos(gameData);
+            JSONArray clientArray = new JSONArray(msgObj.optString(K_CLIENTS_LIST));
+            for (Object clientData : clientArray) {
+                JSONObject client = (JSONObject) clientData;
+                String name = client.optString("name");
+                if (name.equals(Main.clientName)) {
+                    int player = client.optInt("player");
+                    Main.playerNumber = player;
+                }
+            }
+            if (Main.playerNumber == 1) {
+                posY = gameData.optInt("p1PossY");
+            } else {
+                posY = gameData.optInt("p2possY");
+            }
         }
     }
 }
