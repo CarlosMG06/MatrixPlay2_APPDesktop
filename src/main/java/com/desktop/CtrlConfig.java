@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
+import javafx.application.Platform;
 
 public class CtrlConfig implements Initializable, Messages, MessageListener {
 
@@ -50,12 +51,14 @@ public class CtrlConfig implements Initializable, Messages, MessageListener {
                 WSManager.client.safeSend(msgObj.toString());
             case T_CHECK_NAME_STATUS:
                 String status = msgObj.optString(K_VALUE, "");
-                if (status == V_NAME_AVAILABLE) {
+                if (status.equals(V_NAME_AVAILABLE)) {
+                    Platform.runLater(() -> {
+                        UtilsViews.setView("ViewWaiting");
+                    });
                     msgObj = new JSONObject();
                     msgObj.put("type", C_AWAITING_COUNTDOWN);
                     WSManager.client.safeSend(msgObj.toString());
-                    UtilsViews.setViewAnimating("ViewWaiting");
-                } else if (status == V_NAME_USED) {
+                } else if (status.equals(V_NAME_USED)) {
                     WSManager.updateConnectionText("Name already in use", Color.RED);
                 }
         }

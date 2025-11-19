@@ -15,6 +15,6 @@
             <Label fx:id="labelName2" alignment="CENTER" prefHeight="40.0" prefWidth="160.0" styleClass="txt32" text="Jugador2" textAlignment="CENTER" />
          </children>
       </HBox>
-      <Label fx:id="labelCountdown" alignment="CENTER" layoutX="10.0" layoutY="10.0" styleClass="txt64" text="3" textAlignment="CENTER" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="200.0" />
+      <Label fx:id="labelCountdown" alignment="CENTER" layoutX="10.0" layoutY="10.0" styleClass="txt64" text="5" textAlignment="CENTER" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="150.0" />
    </children>
 </AnchorPane>

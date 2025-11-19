@@ -123,6 +123,7 @@ public class UtilsWS {
 
     public void safeSend(String text) {
         try {
+            System.out.println(text);
             if (client != null && client.isOpen()) {
                 client.send(text);
             } else {

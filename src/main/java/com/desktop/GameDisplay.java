@@ -30,8 +30,8 @@ public class GameDisplay extends Canvas {
         
         this.pixelTypeface = Font.loadFont(getClass().getResourceAsStream("/fonts/m6x11.ttf"), 15);
         
-        p1Bar = new GameBar(0, 0, (int)recWidth, (int)recHeight);
-        p2Bar = new GameBar(61, 0, (int)recWidth, (int)recHeight);
+        p1Bar = new GameBar(0, 32, (int)recWidth, (int)recHeight);
+        p2Bar = new GameBar(61, 32, (int)recWidth, (int)recHeight);
         ball = new GameBall(0, 0, (int)ballSize);
         
         widthProperty().addListener((obs, oldVal, newVal) -> onSizeChanged());
@@ -83,17 +83,17 @@ public class GameDisplay extends Canvas {
         gc.setFill(Color.web("#50589C"));
 
         gc.fillRect(
-            p1Bar.getPosX(),
-            p1Bar.getPosY(),
-            p1Bar.getThickness(),
-            p1Bar.getWidth()
+            p1Bar.getPosX() * scaleX,
+            p1Bar.getPosY() * scaleY,
+            p1Bar.getWidth(),
+            p1Bar.getHeight()
         );
         
         gc.fillRect(
-            p2Bar.getPosX(),
-            p2Bar.getPosY(),
-            p2Bar.getThickness(),
-            p1Bar.getWidth()
+            p2Bar.getPosX() * scaleX,
+            p2Bar.getPosY() * scaleY,
+            p2Bar.getWidth(),
+            p2Bar.getHeight()
         );
     }
 
@@ -101,8 +101,8 @@ public class GameDisplay extends Canvas {
         gc.setFill(Color.web("#3C467B"));
         double ballRadius = ball.getRadius();
         gc.fillRect(
-            ball.getPosX(),
-            ball.getPosY(),
+            ball.getPosX() * scaleX,
+            ball.getPosY() * scaleY,
             ballRadius,
             ballRadius
         );
@@ -134,24 +134,20 @@ public class GameDisplay extends Canvas {
 
     public void setDatos(JSONObject json) {
         // Actualizar posiciones de las barras
-        p1Bar = new GameBar(
+        p1Bar.setGameBar(
             p1Bar.getPosX(),
-            json.optInt("p1PossY") * scaleY,
-            p1Bar.getWidth(),
-            p1Bar.getThickness()
+            json.optInt("p1PossY")
         );
         
-        p2Bar = new GameBar(
+        p2Bar.setGameBar(
             p2Bar.getPosX(),
-            json.optInt("p2PossY") * scaleY,
-            p2Bar.getWidth(),
-            p2Bar.getThickness()
+            json.optInt("p2PossY")
         );
 
         // Actualizar posición de la bola
         ball = new GameBall(
-            json.optInt("ballX") * scaleX,
-            json.optInt("ballY") * scaleY,
+            json.optInt("ballX"),
+            json.optInt("ballY"),
             ball.getRadius()
         );
 
