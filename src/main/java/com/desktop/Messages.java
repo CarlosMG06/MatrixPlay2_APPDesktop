@@ -25,7 +25,8 @@ public interface Messages {
     // Game
     public final String T_SERVER_START_GAME = "startGame";
     public final String T_CLIENT_POSSITION = "clientPoss";
-    public final String T_SERVER_DATA = "serverData"; 
+    public final String T_SERVER_DATA = "serverData";
+    public final String K_CLIENTS_LIST = "serverClients";
     public final String K_SERVER_GAME_DATA = "serverGameData";
     public final String C_MOVE = "clientMove";
     public final String C_INPUT = "input";
