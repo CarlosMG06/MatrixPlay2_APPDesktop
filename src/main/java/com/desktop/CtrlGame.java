@@ -20,8 +20,6 @@ public class CtrlGame implements Initializable, Messages, MessageListener {
 
     private GameDisplay display;
 
-    private Boolean KEY_UP = false;
-    private Boolean KEY_DOWN = false;
     private GameBar barToMove;
     // private int posY;
 
@@ -36,18 +34,6 @@ public class CtrlGame implements Initializable, Messages, MessageListener {
         gameContainer.heightProperty().addListener((obs, oldVal, newVal) -> {
             display.setHeight(newVal.doubleValue());
         });
-
-        // gameContainer.setOnKeyPressed(event -> {
-        //     System.out.println("\n\n\nsfdsdf entro aca \n\n\n");
-        //     if (event.getCode().equals(KeyCode.UP)) KEY_UP = true;
-        //     if (event.getCode().equals(KeyCode.DOWN)) KEY_DOWN = true;
-        // });
-        // gameContainer.setOnKeyReleased(event -> {
-        //     if (event.getCode().equals(KeyCode.UP)) KEY_UP = false;
-        //     if (event.getCode().equals(KeyCode.DOWN)) KEY_DOWN = false;
-        // });
-        // gameContainer.setFocusTraversable(true);
-
     }
 
     private GameBar getBarToMove() {
@@ -59,41 +45,45 @@ public class CtrlGame implements Initializable, Messages, MessageListener {
     }
 
     public void onShow() {
+        barToMove = getBarToMove();
+
         Scene scene = gameContainer.getScene();
         if (scene != null) {
-        scene.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.UP) KEY_UP = true;
-            if (event.getCode() == KeyCode.DOWN) KEY_DOWN = true;
-        });
-        scene.setOnKeyReleased(event -> {
-            if (event.getCode() == KeyCode.UP) KEY_UP = false;
-            if (event.getCode() == KeyCode.DOWN) KEY_DOWN = false;
-        });
-    }
+            scene.setOnKeyPressed(event -> {
+                if (event.getCode() == KeyCode.UP) {
+                    barToMove.setDirUp();
+                }
+                if (event.getCode() == KeyCode.DOWN) {
+                    barToMove.setDirDown();
+                }
+            });
+            scene.setOnKeyReleased(event -> {
+                if (event.getCode() == KeyCode.UP || event.getCode() == KeyCode.DOWN) {
+                    barToMove.setDirStill();
+                }
+            });
+        }
 
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                barToMove = getBarToMove();
-                int newPosY = barToMove.getPosY();
-                if (KEY_UP) {
-                    newPosY = barToMove.moveUp();
+                // Moure la barra segons la seva direcció
+                switch (barToMove.getDirection()) {
+                    case UP:
+                        barToMove.setPosY(barToMove.moveUp());
+                        break;
+                    case DOWN:
+                        barToMove.setPosY(barToMove.moveDown());
+                        break;
+                    case STILL:
+                        // No moure
+                        break;
                 }
-                if (KEY_DOWN) {
-                    newPosY = barToMove.moveDown();
-                }
-                // int newPosY = posY;
-                // if (KEY_UP) {
-                //     newPosY += 1;
-                // }
-                // if (KEY_DOWN) {
-                //     newPosY -= 1;
-                // }
                 JSONObject msgObj = new JSONObject();
                 msgObj.put("type", C_MOVE);
                 JSONObject value = new JSONObject();
                 value.put(C_NAME, Main.clientName);
-                value.put(C_INPUT, newPosY);
+                value.put(C_INPUT, barToMove.getPosY());
                 msgObj.put("value", value);
                 WSManager.client.safeSend(msgObj.toString());
             }

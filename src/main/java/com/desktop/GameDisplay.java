@@ -6,6 +6,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import org.json.JSONObject;
 
+import com.desktop.GameBar.Direction;
+
 public class GameDisplay extends Canvas {
     private final Font pixelTypeface;
     private final GraphicsContext gc;
@@ -30,8 +32,8 @@ public class GameDisplay extends Canvas {
         
         this.pixelTypeface = Font.loadFont(getClass().getResourceAsStream("/fonts/m6x11.ttf"), 15);
         
-        p1Bar = new GameBar(0, 32, (int)recWidth, (int)recHeight);
-        p2Bar = new GameBar(61, 32, (int)recWidth, (int)recHeight);
+        p1Bar = new GameBar(0, 32, (int)recWidth, (int)recHeight, Direction.STILL);
+        p2Bar = new GameBar(61, 32, (int)recWidth, (int)recHeight, Direction.STILL);
         ball = new GameBall(0, 0, (int)ballSize);
         
         widthProperty().addListener((obs, oldVal, newVal) -> onSizeChanged());
@@ -43,19 +45,8 @@ public class GameDisplay extends Canvas {
     private void onSizeChanged() {
         double w = getWidth();
         double h = getHeight();
-
         scaleX = w / 64.0;
         scaleY = h / 64.0;
-
-        double scaledRecWidth = recWidth * scaleX;
-        double scaledRecHeight = recHeight * scaleY;
-        double scaledBallSize = ballSize * scaleX;
-
-        p1Bar = new GameBar(0, 0, (int)scaledRecWidth, (int)scaledRecHeight);
-        p2Bar = new GameBar(61, 0, (int)scaledRecWidth, (int)scaledRecHeight);
-        
-        ball = new GameBall(0, 0, (int)scaledBallSize);
-
         draw();
     }
 
@@ -85,15 +76,15 @@ public class GameDisplay extends Canvas {
         gc.fillRect(
             p1Bar.getPosX() * scaleX,
             p1Bar.getPosY() * scaleY,
-            p1Bar.getWidth(),
-            p1Bar.getHeight()
+            p1Bar.getWidth() * scaleX,
+            p1Bar.getHeight() * scaleY
         );
         
         gc.fillRect(
             p2Bar.getPosX() * scaleX,
             p2Bar.getPosY() * scaleY,
-            p2Bar.getWidth(),
-            p2Bar.getHeight()
+            p2Bar.getWidth() * scaleX,
+            p2Bar.getHeight() * scaleY
         );
     }
 
@@ -103,8 +94,8 @@ public class GameDisplay extends Canvas {
         gc.fillRect(
             ball.getPosX() * scaleX,
             ball.getPosY() * scaleY,
-            ballRadius,
-            ballRadius
+            ballRadius * scaleX,
+            ballRadius * scaleY
         );
     }
 
@@ -134,21 +125,13 @@ public class GameDisplay extends Canvas {
 
     public void setDatos(JSONObject json) {
         // Actualizar posiciones de las barras
-        p1Bar.setGameBar(
-            p1Bar.getPosX(),
-            json.optInt("p1PossY")
-        );
-        
-        p2Bar.setGameBar(
-            p2Bar.getPosX(),
-            json.optInt("p2PossY")
-        );
+        p1Bar.setPosY(json.optInt("p1PossY"));
+        p2Bar.setPosY(json.optInt("p2PossY"));
 
         // Actualizar posición de la bola
-        ball = new GameBall(
+        ball.setPos(
             json.optInt("ballX"),
-            json.optInt("ballY"),
-            ball.getRadius()
+            json.optInt("ballY")
         );
 
         p1Points = json.optInt("p1Points");
@@ -163,9 +146,5 @@ public class GameDisplay extends Canvas {
     
     public GameBar getP2Bar() {
         return p2Bar;
-    }
-    
-    public GameBall getBall() {
-        return ball;
     }
 }
