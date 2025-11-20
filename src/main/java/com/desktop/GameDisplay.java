@@ -47,6 +47,16 @@ public class GameDisplay extends Canvas {
         double h = getHeight();
         scaleX = w / 64.0;
         scaleY = h / 64.0;
+
+        double scaledRecWidth = recWidth * scaleX;
+        double scaledRecHeight = recHeight * scaleY;
+        double scaledBallSize = ballSize * scaleX;
+
+        p1Bar = new GameBar(0, 0, (int)scaledRecWidth, (int)scaledRecHeight, Direction.STILL);
+        p2Bar = new GameBar(61, 0, (int)scaledRecWidth, (int)scaledRecHeight, Direction.STILL);
+        
+        ball = new GameBall(0, 0, (int)scaledBallSize);
+
         draw();
     }
 
@@ -76,15 +86,15 @@ public class GameDisplay extends Canvas {
         gc.fillRect(
             p1Bar.getPosX() * scaleX,
             p1Bar.getPosY() * scaleY,
-            p1Bar.getWidth() * scaleX,
-            p1Bar.getHeight() * scaleY
+            p1Bar.getWidth(),
+            p1Bar.getHeight()
         );
         
         gc.fillRect(
             p2Bar.getPosX() * scaleX,
             p2Bar.getPosY() * scaleY,
-            p2Bar.getWidth() * scaleX,
-            p2Bar.getHeight() * scaleY
+            p2Bar.getWidth(),
+            p2Bar.getHeight()
         );
     }
 
@@ -94,8 +104,8 @@ public class GameDisplay extends Canvas {
         gc.fillRect(
             ball.getPosX() * scaleX,
             ball.getPosY() * scaleY,
-            ballRadius * scaleX,
-            ballRadius * scaleY
+            ballRadius,
+            ballRadius
         );
     }
 
