@@ -140,8 +140,8 @@ public class GameDisplay extends Canvas {
 
         // Actualizar posición de la bola
         ball.setPos(
-            json.optInt("ballX"),
-            json.optInt("ballY")
+            json.optDouble("ballX"),
+            json.optDouble("ballY")
         );
 
         p1Points = json.optInt("p1Points");

@@ -21,7 +21,6 @@ public class CtrlGame implements Initializable, Messages, MessageListener {
     private GameDisplay display;
 
     private GameBar barToMove;
-    // private int posY;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

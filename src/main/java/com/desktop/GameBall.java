@@ -4,8 +4,6 @@ public class GameBall {
     private final int RADIUS;
     private double posX;
     private double posY;
-    // private enum Direction {UPLEFT, UPRIGHT, DOWNLEFT, DOWNRIGHT};
-    // private Direction dir;
 
     public GameBall(double posX, double posY, int RADIUS) {
         this.posX = posX;
@@ -27,26 +25,4 @@ public class GameBall {
     public int getRadius() {
         return RADIUS;
     }
-
-    // public void setInitialDir(Direction dir) {
-    //     this.dir = dir;
-    // }
-    
-    // public void bounceVertical() {
-    //     switch(dir) {
-    //         case UPLEFT -> dir = Direction.DOWNLEFT;
-    //         case UPRIGHT -> dir = Direction.DOWNRIGHT;
-    //         case DOWNLEFT -> dir = Direction.UPLEFT;
-    //         case DOWNRIGHT -> dir = Direction.UPRIGHT;
-    //     }
-    // }
-    
-    // public void bounceHorizontal() {
-    //     switch(dir) {
-    //         case UPLEFT -> dir = Direction.UPRIGHT;
-    //         case UPRIGHT -> dir = Direction.UPLEFT;
-    //         case DOWNLEFT -> dir = Direction.DOWNRIGHT;
-    //         case DOWNRIGHT -> dir = Direction.DOWNLEFT;
-    //     }
-    // }
 }
