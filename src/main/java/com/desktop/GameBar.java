@@ -2,28 +2,29 @@ package com.desktop;
 
 public class GameBar {
     private double posX;
-    private int posY;
+    private double posY;
     private int width;
     private int height;
+    public static enum Direction {UP, STILL, DOWN};
+    private Direction dir;
 
-    public GameBar(double posX, int posY, int WIDTH, int height) {
+    public GameBar(double posX, int posY, int WIDTH, int height, Direction dir) {
         this.posX = posX;
         this.posY = posY;
         this.width = WIDTH;
         this.height = height;
+        this.dir = dir;
     }
-
-    public void setGameBar(double posX, int posY) {
-        this.posX = posX;
-        this.posY = posY;
-    }
-
+    
     public double getPosX() {
         return posX;
     }
 
-    public int getPosY() {
+    public double getPosY() {
         return posY;
+    }
+    public void setPosY(double posY) {
+        this.posY = posY;
     }
 
     public int getHeight() {
@@ -36,6 +37,19 @@ public class GameBar {
 
     public int getWidth() {
         return width;
+    }
+
+    public Direction getDirection() {
+        return dir;
+    }
+    public void setDirUp() {
+        dir = Direction.UP;
+    }
+    public void setDirDown() {
+        dir = Direction.DOWN;
+    }
+    public void setDirStill() {
+        dir = Direction.STILL;
     }
 
     public int moveUp() {
