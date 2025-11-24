@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -93,23 +94,28 @@ public class CtrlGame implements Initializable, Messages, MessageListener {
     @Override
     public void receiveMessage(JSONObject msgObj) {
         String type = msgObj.optString(K_TYPE, "");
-        if (type.equals(T_SERVER_DATA)) {
-            JSONObject gameData = new JSONObject(msgObj.optString(K_SERVER_GAME_DATA));
-            display.setDatos(gameData);
-            JSONArray clientArray = new JSONArray(msgObj.optString(K_CLIENTS_LIST));
-            for (Object clientData : clientArray) {
-                JSONObject client = (JSONObject) clientData;
-                String name = client.optString("name");
-                if (name.equals(Main.clientName)) {
-                    int player = client.optInt("player");
-                    Main.playerNumber = player;
+        switch (type) {
+            case T_SERVER_DATA:
+                JSONObject gameData = new JSONObject(msgObj.optString(K_SERVER_GAME_DATA));
+                display.setDatos(gameData);
+                JSONArray clientArray = new JSONArray(msgObj.optString(K_CLIENTS_LIST));
+                for (Object clientData : clientArray) {
+                    JSONObject client = (JSONObject) clientData;
+                    String name = client.optString("name");
+                    if (name.equals(Main.clientName)) {
+                        int player = client.optInt("player");
+                        Main.playerNumber = player;
+                    }
                 }
-            }
-            // if (Main.playerNumber == 1) {
-            //     posY = gameData.optInt("p1PossY");
-            // } else {
-            //     posY = gameData.optInt("p2possY");
-            // }
+                break;
+            case T_WINNER:
+                String winner = msgObj.optString(K_VALUE, "");
+                Platform.runLater(() -> {
+                    CtrlResults ctrlResults = (CtrlResults) UtilsViews.getController("ViewResults");
+                    ctrlResults.labelWinner.setText("Guanyador: " + winner);
+                    UtilsViews.setView("ViewResults");
+                });
+                break;
         }
     }
 }

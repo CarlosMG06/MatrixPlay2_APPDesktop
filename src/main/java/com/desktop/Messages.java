@@ -30,6 +30,7 @@ public interface Messages {
     public final String K_SERVER_GAME_DATA = "serverGameData";
     public final String C_MOVE = "clientMove";
     public final String C_INPUT = "input";
-
     public final String C_NAME = "clientName";
+
+    public final String T_WINNER = "winner";
 }
