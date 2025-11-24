@@ -6,12 +6,36 @@ import java.util.ResourceBundle;
 import org.json.JSONObject;
 
 import javafx.application.Platform;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 
 public class CtrlWaiting implements Initializable, Messages, MessageListener {
 
+    @FXML
+    Label labelWaiting;
+
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
+    }
+
+    public void onShow() {
+        String waitingText = "Esperant a l'oponent";
+        new Thread(() -> {
+            while (UtilsViews.getActiveView().equals("ViewWaiting")) {
+                try {
+                    for (int i = 0; i <= 3; i++) {
+                        final int dots = i;
+                        Platform.runLater(() -> {
+                            labelWaiting.setText(waitingText + ".".repeat(dots));
+                        });
+                        Thread.sleep(800);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     public void receiveMessage(JSONObject msgObj) {

@@ -59,6 +59,8 @@ public class CtrlConfig implements Initializable, Messages, MessageListener {
                 if (status.equals(V_NAME_AVAILABLE)) {
                     Platform.runLater(() -> {
                         UtilsViews.setView("ViewWaiting");
+                        CtrlWaiting ctrlWaiting = (CtrlWaiting) UtilsViews.getController("ViewWaiting");
+                        ctrlWaiting.onShow();
                     });
                     msgObj = new JSONObject();
                     msgObj.put("type", C_AWAITING_COUNTDOWN);
