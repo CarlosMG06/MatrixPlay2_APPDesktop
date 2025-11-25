@@ -29,25 +29,6 @@ public class CtrlResults implements Messages, MessageListener {
 
     @Override
     public void receiveMessage(JSONObject msgObj) {
-        String type = msgObj.optString("type", "");
-        if (type.equals(T_COUNTDOWN)) {
-            JSONObject value = new JSONObject(msgObj.optString(K_VALUE, ""));
-            String player1 = value.optString(V_P1NAME, "");
-            String player2 = value.optString(V_P2NAME, "");
-            if (Main.clientName.equals(player1)) {
-                Main.playerNumber = 1;
-                Main.rivalName = player2;
-            } else {
-                Main.playerNumber = 2;
-                Main.rivalName = player1;
-            }
-            Platform.runLater(() -> {
-                CtrlCountdown ctrlCountdown = (CtrlCountdown) UtilsViews.getController("ViewCountdown");
-                ctrlCountdown.labelName1.setText(player1);
-                ctrlCountdown.labelName2.setText(player2); 
-                UtilsViews.setView("ViewCountdown");
-            });
-        }
     }
 
 }
