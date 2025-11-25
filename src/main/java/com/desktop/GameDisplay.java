@@ -86,12 +86,12 @@ public class GameDisplay extends Canvas {
     private void drawCountdown() {
         gc.setFill(Color.WHITE);
         gc.setFont(pixelTypeface);
-        gc.setFont(Font.font(gc.getFont().getFamily(), 40 * scaleX));
+        gc.setFont(Font.font(gc.getFont().getFamily(), 30 * scaleX));
 
         gc.fillText(
             String.valueOf(countdown),
             getWidth() * 0.4,
-            getHeight() * 0.5
+            getHeight() * 0.7
         );
     }
 

@@ -23,6 +23,9 @@ public class CtrlResults implements Messages, MessageListener {
     }
     @FXML
     private void exit() {
+        JSONObject msgObj = new JSONObject();
+        msgObj.put("type", C_EXIT);
+        WSManager.client.safeSend(msgObj.toString());
         Main main = new Main();
         main.stop();
     }

@@ -20,6 +20,9 @@ public class CtrlWaiting implements Initializable, Messages, MessageListener {
     }
 
     public void onShow() {
+        JSONObject msgObj = new JSONObject();
+        msgObj.put("type", C_AWAITING_COUNTDOWN);
+        WSManager.client.safeSend(msgObj.toString());
         String waitingText = "Esperant a l'oponent";
         new Thread(() -> {
             while (UtilsViews.getActiveView().equals("ViewWaiting")) {
