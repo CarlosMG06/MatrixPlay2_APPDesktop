@@ -23,7 +23,6 @@ public class WSManager {
         JSONObject msgObj = new JSONObject(response);
         String activeView = UtilsViews.getActiveView();
         MessageListener controller = (MessageListener) UtilsViews.getController(activeView);
-        System.out.println(response);
         if (controller != null) {
             controller.receiveMessage(msgObj);
             return;
