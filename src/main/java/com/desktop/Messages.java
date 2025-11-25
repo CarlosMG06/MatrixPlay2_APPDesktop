@@ -33,4 +33,7 @@ public interface Messages {
     public final String C_NAME = "clientName";
 
     public final String T_WINNER = "winner";
+
+    // Results
+    public final String C_PLAY_AGAIN = "playAgain";
 }

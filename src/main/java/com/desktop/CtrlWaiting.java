@@ -51,10 +51,14 @@ public class CtrlWaiting implements Initializable, Messages, MessageListener {
                 Main.playerNumber = 2;
                 Main.rivalName = player1;
             }
+            int seconds = value.optInt(V_SECONDS);
             Platform.runLater(() -> {
                 CtrlCountdown ctrlCountdown = (CtrlCountdown) UtilsViews.getController("ViewCountdown");
                 ctrlCountdown.labelName1.setText(player1);
                 ctrlCountdown.labelName2.setText(player2); 
+                ctrlCountdown.labelCountdown.setText(String.valueOf(seconds));
+
+                ctrlCountdown.labelCountdown.setStyle("-fx-font-size: " + (64 + 16 * (5 - seconds)) + "px;");
                 UtilsViews.setView("ViewCountdown");
             });
         }

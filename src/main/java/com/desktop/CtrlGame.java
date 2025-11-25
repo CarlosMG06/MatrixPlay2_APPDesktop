@@ -23,6 +23,8 @@ public class CtrlGame implements Initializable, Messages, MessageListener {
 
     private GameBar barToMove;
 
+    private AnimationTimer timer;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         display = new GameDisplay(512, 512);
@@ -64,7 +66,7 @@ public class CtrlGame implements Initializable, Messages, MessageListener {
             });
         }
 
-        AnimationTimer timer = new AnimationTimer() {
+        timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
                 // Moure la barra segons la seva direcció
@@ -114,6 +116,7 @@ public class CtrlGame implements Initializable, Messages, MessageListener {
                     CtrlResults ctrlResults = (CtrlResults) UtilsViews.getController("ViewResults");
                     ctrlResults.labelWinner.setText("Guanyador: " + winner);
                     UtilsViews.setView("ViewResults");
+                    timer.stop();
                 });
                 break;
         }
