@@ -26,6 +26,9 @@ public class GameDisplay extends Canvas {
     private final double recHeight = 16.0;
     private final double ballSize = 2.0;
 
+    private boolean isRoundCountdown = false;
+    private int countdown = 3;
+
     public GameDisplay(double width, double height) {
         super(width, height);
         this.gc = getGraphicsContext2D();
@@ -80,6 +83,18 @@ public class GameDisplay extends Canvas {
         );
     }
 
+    private void drawCountdown() {
+        gc.setFill(Color.WHITE);
+        gc.setFont(pixelTypeface);
+        gc.setFont(Font.font(gc.getFont().getFamily(), 30 * scaleX));
+
+        gc.fillText(
+            String.valueOf(countdown),
+            getWidth() * 0.4,
+            getHeight() * 0.7
+        );
+    }
+
     private void drawRects() {
         gc.setFill(Color.web("#50589C"));
 
@@ -131,6 +146,18 @@ public class GameDisplay extends Canvas {
         drawBall();
         drawRects();
         drawWhiteLine();
+
+        if (isRoundCountdown) {
+            drawCountdown();
+        }
+    }
+
+    public void roundCountdown(int count) {
+        isRoundCountdown = true;
+        countdown = count;
+        if (countdown <= 0) {
+            isRoundCountdown = false;
+        }
     }
 
     public void setDatos(JSONObject json) {

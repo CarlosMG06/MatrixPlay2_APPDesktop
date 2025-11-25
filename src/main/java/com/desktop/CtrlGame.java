@@ -110,6 +110,12 @@ public class CtrlGame implements Initializable, Messages, MessageListener {
                     }
                 }
                 break;
+            case T_INIT_ROUND_COUNTDOWN:
+                int count = msgObj.optInt(K_VALUE);
+                Platform.runLater(() -> {
+                    display.roundCountdown(count);
+                });
+                break;
             case T_WINNER:
                 String winner = msgObj.optString(K_VALUE, "");
                 Platform.runLater(() -> {

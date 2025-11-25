@@ -32,8 +32,10 @@ public interface Messages {
     public final String C_INPUT = "input";
     public final String C_NAME = "clientName";
 
+    public final String T_INIT_ROUND_COUNTDOWN = "roundCountDown";
     public final String T_WINNER = "winner";
 
     // Results
     public final String C_PLAY_AGAIN = "playAgain";
+    public final String C_EXIT = "exit";
 }
