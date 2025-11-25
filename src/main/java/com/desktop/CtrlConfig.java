@@ -62,9 +62,6 @@ public class CtrlConfig implements Initializable, Messages, MessageListener {
                         CtrlWaiting ctrlWaiting = (CtrlWaiting) UtilsViews.getController("ViewWaiting");
                         ctrlWaiting.onShow();
                     });
-                    msgObj = new JSONObject();
-                    msgObj.put("type", C_AWAITING_COUNTDOWN);
-                    WSManager.client.safeSend(msgObj.toString());
                 } else if (status.equals(V_NAME_USED)) {
                     WSManager.updateConnectionText("Name already in use", Color.RED);
                 }
