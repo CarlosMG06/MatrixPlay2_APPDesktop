@@ -25,10 +25,17 @@ public interface Messages {
     // Game
     public final String T_SERVER_START_GAME = "startGame";
     public final String T_CLIENT_POSSITION = "clientPoss";
-    public final String T_SERVER_DATA = "serverData"; 
+    public final String T_SERVER_DATA = "serverData";
+    public final String K_CLIENTS_LIST = "serverClients";
     public final String K_SERVER_GAME_DATA = "serverGameData";
     public final String C_MOVE = "clientMove";
     public final String C_INPUT = "input";
-
     public final String C_NAME = "clientName";
+
+    public final String T_INIT_ROUND_COUNTDOWN = "roundCountDown";
+    public final String T_WINNER = "winner";
+
+    // Results
+    public final String C_PLAY_AGAIN = "playAgain";
+    public final String C_EXIT = "exit";
 }

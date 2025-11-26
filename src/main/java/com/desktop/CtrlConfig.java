@@ -33,9 +33,14 @@ public class CtrlConfig implements Initializable, Messages, MessageListener {
 
     @FXML
     private void connectToServer() {
-        protocol = "wss";
         host = txtHost.getText();
-        port = 443;
+        if (host.equals("localhost")) {
+            protocol = "ws";
+            port = 3000;
+        } else {
+            protocol = "wss";
+            port = 443;
+        }
         WSManager.connectToServer(protocol, host, port);
     }
 
@@ -54,10 +59,9 @@ public class CtrlConfig implements Initializable, Messages, MessageListener {
                 if (status.equals(V_NAME_AVAILABLE)) {
                     Platform.runLater(() -> {
                         UtilsViews.setView("ViewWaiting");
+                        CtrlWaiting ctrlWaiting = (CtrlWaiting) UtilsViews.getController("ViewWaiting");
+                        ctrlWaiting.onShow();
                     });
-                    msgObj = new JSONObject();
-                    msgObj.put("type", C_AWAITING_COUNTDOWN);
-                    WSManager.client.safeSend(msgObj.toString());
                 } else if (status.equals(V_NAME_USED)) {
                     WSManager.updateConnectionText("Name already in use", Color.RED);
                 }
