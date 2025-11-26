@@ -27,8 +27,13 @@ public class CtrlConfig implements Initializable, Messages, MessageListener {
     private String host;
     private int port;
 
+    public UtilsLoginData data;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        data = new UtilsLoginData();
+        txtName.setText(data.getNom());
+        txtHost.setText(data.getIp());
     }
 
     @FXML
@@ -57,8 +62,15 @@ public class CtrlConfig implements Initializable, Messages, MessageListener {
             case T_CHECK_NAME_STATUS:
                 String status = msgObj.optString(K_VALUE, "");
                 if (status.equals(V_NAME_AVAILABLE)) {
+                    JSONObject newdata = new JSONObject()
+                        .put("nom", txtName.getText())
+                        .put("IP", txtHost.getText());
+
+                        data.save(newdata);
                     Platform.runLater(() -> {
                         UtilsViews.setView("ViewWaiting");
+
+                        
                         CtrlWaiting ctrlWaiting = (CtrlWaiting) UtilsViews.getController("ViewWaiting");
                         ctrlWaiting.onShow();
                     });
